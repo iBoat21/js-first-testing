@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="updateQty('-')">-</button>
+    <input type="text" id="qty" value="0">
+    <button onclick="updateQty('+')">+</button>
+
+    <p>
+        <button onclick="CheckOut()">CheckOut</button>
+    </p>
+
+    <p>
+        Cart : <span id="cart">0</span>
+    </p>
+
+    <p>
+        <h5>Buy History</h5>
+        <ul id="history">
+
+        </ul>
+    </p>
+    <script>
+        function CheckOut(){
+            let qty = document.getElementById('qty');
+            let val_qty = parseInt(qty.value);
+            let cart = document.getElementById('cart');
+            let val_cart = parseInt(cart.innerText);
+            let history = document.getElementById('history');
+
+            cart.innerHTML = val_cart + val_qty;
+           
+    
+        // add history
+            let li = document.createElement('li');
+            li.innerHTML = 'add' + val_qty;
+
+            history.appendChild(li);
+
+            val_qty=0;
+            qty.value=val_qty;
+        }
+
+        function updateQty(op){
+            let qty = document.getElementById('qty');
+            let val_qty = parseInt(qty.value);
+            if(op==="+")
+                val_qty+100;
+            else if(op==='-'){
+                if(val_qty-1>=0)
+                val_qty--;
+            }
+            qty.value = val_qty;
+        }
+    </script>
+</body>
+</html>

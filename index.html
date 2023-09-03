@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Cash Vending Machine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #343a40;
+        }
+
+        .balance, .wallet {
+            font-size: 18px;
+            color: #6c757d;
+        }
+
+        .row.m-auto {
+            margin-top: 20px;
+        }
+
+        .col {
+            font-size: 20px;
+            color: #343a40;
+        }
+
+        .btn-primary {
+            font-size: 18px;
+        }
+
+        .btn-success, .btn-info {
+            font-size: 18px;
+            width: 100%;
+            background-color: rgba(40, 167, 69);
+            border: none;
+            margin-bottom: 5px; 
+        }
+
+        .btn-info {
+            background-color: rgba(23, 162, 184, 0.4);
+        }
+
+        #history {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #history li {
+            font-size: 16px;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .btn-danger {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <center class="mt-4">
+            <h1>Online Cash Vending Machine</h1>
+        </center>
+        <hr>
+        <div class="row ">
+            <div class="col">
+                ยอดเงินคงเหลือ
+                <p class="balance">
+                    ยอดเงินคงเหลือ : <span id="balanceAmout">20000</span> บาท
+                </p>
+            </div>
+            <div class="col">
+                เงินในกระเป๋า
+                <p class="wallet">
+                    เงินในกระเป๋า : <span id="walletAmout">0</span> บาท
+                </p>
+            </div>
+        </div>
+
+        <div class="row m-auto">
+            <div class="col">
+                คลิ๊กเพื่อเพิ่มจำนวนเงิน
+            </div>
+            <div class="col m-auto">
+                ประวัติการถอนเงิน
+            </div>
+            <div class="row">
+                <div class="col mt-2">
+                    <button id="qty" class="mb-2 btn-success">
+                        0
+                    </button>
+                    <br>
+                    <button id="Withdraw" class="btn-primary" onclick="MyFunc(this.innerHTML)" oncontextmenu="Rm(this.innerHTML)">
+                        100
+                    </button>
+                    <button id="Withdraw" class="btn-primary" onclick="MyFunc(this.innerHTML)" oncontextmenu="Rm(this.innerHTML)">
+                        500
+                    </button>
+                    <button id="Withdraw" class="btn-primary" onclick="MyFunc(this.innerHTML)" oncontextmenu="Rm(this.innerHTML)">
+                        1000
+                    </button>
+                    <button id="Withdraw" class="btn-primary" onclick="MyFunc(this.innerHTML)" oncontextmenu="Rm(this.innerHTML)">
+                        5000
+                    </button>
+                    <br>
+                </div>
+                <div class="col">
+                    <ul id="history">
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <button id="getMoney" class="btn-danger" onclick="MyDepo()">ถอนเงิน</button>
+                    <button id="CheckOut" class="btn-danger" onclick="Clear()">เคลียร์ค่า</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- script zone -->
+    <script>
+        function MyFunc(money) {
+            // alert(money);
+            // console.log(Number(document.getElementById('qty').innerHTML));
+            qty = Number(document.getElementById('qty').innerHTML);
+            document.getElementById('qty').innerHTML = qty + Number(money);
+        }
+
+        function Rm(money) {
+            event.preventDefault();
+            qty = Number(document.getElementById('qty').innerHTML);
+            document.getElementById('qty').innerHTML = qty - Number(money);
+            money = Number(money);
+            if(qty >= money){
+                document.getElementById('qty').innerHTML = qty - money;
+            }else{
+                alert("ยอดเงินไม่พอ");
+                document.getElementById('qty').innerHTML = 0;
+            }
+        }
+
+        function MyDepo() {
+            balanceAmout = Number(document.getElementById('balanceAmout').innerHTML);
+            document.getElementById('balanceAmout').innerHTML = balanceAmout - Number(document.getElementById('qty').innerHTML);
+
+            walletAmout = Number(document.getElementById('walletAmout').innerHTML);
+            document.getElementById('walletAmout').innerHTML = walletAmout + Number(document.getElementById('qty').innerHTML);
+
+            var history = document.getElementById('history');
+            var li = document.createElement('li');
+            li.textContent = "ค่าเงินเบิก" + document.getElementById('qty').innerHTML;
+            history.appendChild(li);
+
+            qty = 0;
+            document.getElementById('qty').innerHTML = qty;
+        }
+
+        function Clear() {
+            qty = 0;
+            document.getElementById('qty').innerHTML = qty;
+        }
+    </script>
+</body>
+
+</html>
